@@ -15,7 +15,7 @@ export default function About() {
     <section id="about" className="relative overflow-hidden bg-gradient-to-b from-brand-dark to-[#4a0e0e] py-20 sm:py-28">
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1600&q=60"
+          src="src/components/img/madal logo.png"
           alt=""
           loading="lazy"
           className="h-full w-full object-cover opacity-20"
@@ -67,7 +67,7 @@ export default function About() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80"
+                src="src/components/img/madal logo.png"
                 alt="AQVO"
                 className="w-full h-72 sm:h-96 object-cover"
               />
