@@ -1,53 +1,88 @@
 import React from 'react';
 
+// Yuqori qator (rasmlar, o'ngdan chapga yuradi)
 const GALLERY_TOP = [
-  { src: 'https://placehold.co/200x200/8B1A1A/ffffff?text=AQVO+1', alt: "AQVO tabiiy mahsulot bankasi yaqin masofadan" },
-  { src: 'https://placehold.co/200x200/D2540B/ffffff?text=AQVO+2', alt: "AQVO sousi non ustida" },
-  { src: 'https://placehold.co/200x200/3d2b1f/e8c99a?text=AQVO+3', alt: "AQVO murabbosi idishda" },
-  { src: 'https://placehold.co/200x200/EC9E59/3d1c00?text=Mozzol+JIZ', alt: "Mozzol JIZ mahsuloti qadoqda" },
-  { src: 'https://placehold.co/200x200/991B1B/ffffff?text=AQVO+5', alt: "AQVO mahsulotlari to'plami" },
-  { src: 'https://placehold.co/200x200/631419/ffffff?text=AQVO+6', alt: "AQVO ishlab chiqarish jarayoni" },
+  'src/components/img/jiz1.jpg', 'src/components/img/jiz2.jpg',
+  'src/components/img/jiz3.jpg', 'src/components/img/myaco.jpg',
+  'src/components/img/jiz3.jpg', 'src/components/img/myaco.jpg',
+  'src/components/img/til.jpg', 'src/components/img/jiz4.jpg',
+  'src/components/img/til.jpg', 'src/components/img/jiz4.jpg',
 ];
 
+// Pastki qator (rasmlar, chapdan o'ngga yuradi)
 const GALLERY_BOTTOM = [
-  { src: 'https://placehold.co/200x200/2b2b2b/e8c99a?text=AQVO+7', alt: "AQVO mahsulotlari qadoqlash sexi" },
-  { src: 'https://placehold.co/200x200/7a1414/ffffff?text=AQVO+8', alt: "AQVO oshxonada tayyorlangan taom" },
-  { src: 'https://placehold.co/200x200/c0392b/ffffff?text=AQVO+9', alt: "AQVO mahsuloti dasturxon ustida" },
-  { src: 'https://placehold.co/200x200/3d1c00/e8c99a?text=AQVO+10', alt: "AQVO tabiiy ingredientlar yaqindan" },
-  { src: 'https://placehold.co/200x200/8B1A1A/ffffff?text=AQVO+11', alt: "AQVO mahsuloti idishda yaqin ko'rinish" },
-  { src: 'https://placehold.co/200x200/D2540B/3d1c00?text=AQVO+12', alt: "AQVO oilaviy dasturxon lahzasi" },
+  'src/components/img/til.jpg', 'src/components/img/myaco.jpg',
+  'src/components/img/jiz1.jpg', 'src/components/img/jiz2.jpg',
+  'src/components/img/jiz1.jpg', 'src/components/img/jiz2.jpg',
+  'src/components/img/jiz3.jpg', 'src/components/img/banner (2).jpg',
+  'src/components/img/pamidor.jpg', 'src/components/img/qalampir.jpg',
+  'src/components/img/pamidor.jpg', 'src/components/img/qalampir.jpg',
 ];
-
-function GalleryRow({ items }) {
-  return (
-    <div className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
-      {items.map((item) => (
-        <img
-          key={item.alt}
-          src={item.src}
-          alt={item.alt}
-          width={200}
-          height={200}
-          loading="lazy"
-          className="aspect-square w-full rounded-md object-cover shadow-sm transition-transform hover:scale-[1.03]"
-        />
-      ))}
-    </div>
-  );
-}
 
 export default function Gallery() {
   return (
-    <section
-      className="bg-brand-dark px-4 py-10 sm:px-6 lg:px-8"
-      aria-labelledby="gallery-heading"
-    >
-      <h2 id="gallery-heading" className="sr-only">
-        Foto galereya
-      </h2>
-      <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:gap-3">
-        <GalleryRow items={GALLERY_TOP} />
-        <GalleryRow items={GALLERY_BOTTOM} />
+    <section id="gallery" className="bg-[#901717] py-10 overflow-hidden w-full" aria-labelledby="gallery-heading">
+      <style>{`
+        @keyframes scrollLeft {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scrollRight {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-left {
+          animation: scrollLeft 40s linear infinite;
+        }
+        .animate-right {
+          animation: scrollRight 40s linear infinite;
+        }
+        .animate-left:hover,
+        .animate-right:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      {/* Sarlavha */}
+      <div className="text-center mb-8 px-6">
+        <h2 id="gallery-heading" className="font-display text-3xl font-bold uppercase tracking-wider text-white drop-shadow-lg">
+          BIZNING GALEREYA
+        </h2>
+        <p className="text-white/70 text-sm mt-2">Mahsulotlarimizning eng yaxshi lavhalari</p>
+      </div>
+
+      <div className="flex w-full flex-col gap-6">
+        {/* Yuqori qator: O'ngdan chapga */}
+        <div className="flex w-full overflow-hidden">
+          <div className="flex gap-3 animate-left px-3">
+            {[...GALLERY_TOP, ...GALLERY_TOP].map((src, i) => (
+              <div key={`top-${i}`} className="relative group flex-shrink-0">
+                <img
+                  src={src}
+                  alt="AQVO mahsuloti"
+                  className="h-40 w-40 rounded-2xl object-cover shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Pastki qator: Chapdan o'ngga */}
+        <div className="flex w-full overflow-hidden">
+          <div className="flex gap-3 animate-right px-3">
+            {[...GALLERY_BOTTOM, ...GALLERY_BOTTOM].map((src, i) => (
+              <div key={`bottom-${i}`} className="relative group flex-shrink-0">
+                <img
+                  src={src}
+                  alt="AQVO mahsuloti"
+                  className="h-40 w-40 rounded-2xl object-cover shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

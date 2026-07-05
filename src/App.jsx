@@ -20,10 +20,10 @@ export default function App() {
 
       <main>
         <Hero />
-        <ProductsBanner />
+        <section id="products"><ProductsBanner /></section>
         <About />
         <CTASection />
-        <Gallery />
+        <section id="gallery"><Gallery /></section>
         <OrderForm />
         <Certificates />
       </main>

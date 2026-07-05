@@ -1,203 +1,202 @@
 import React, { useState } from 'react';
+import { sendToTelegram } from '../telegram.js';
 
-const PRODUCT_OPTIONS = [
-  { value: '', label: "Mahsulot turini tanlang" },
-  { value: 'sous', label: 'Tabiiy sous' },
-  { value: 'murabbo', label: 'Murabbo' },
-  { value: 'ajika', label: 'Ajika' },
-  { value: 'jiz', label: "Mazali JIZ" },
-];
-
-const DELIVERY_OPTIONS = [
-  { value: '', label: "Yetkazib berish turini tanlang" },
-  { value: 'courier', label: "Kuryer orqali" },
-  { value: 'pickup', label: "Do'kondan olib ketish" },
-];
+// DIQQAT: Agar img papkasi shu fayl bilan bir xil papkada bo'lsa './' ishlating.
+// Agar img papkasi bitta tepada bo'lsa '../' ishlating.
+import bgImage from './img/bg rasm.jpg';
 
 export default function OrderForm() {
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
+    surname: '',
     phone: '',
-    address: '',
-    product: '',
-    delivery: '',
-    comment: '',
+    telegram: '',
+    region: '',
+    service: '',
+    message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Integration point: send formData to backend / Telegram Bot API, etc.
-    setSubmitted(true);
+    setLoading(true);
+    setNotification(null);
+
+    try {
+      await sendToTelegram(formData, "OrderForm bo'limi");
+      setNotification({ type: 'success', message: "Buyurtmangiz qabul qilindi! Tez orada siz bilan bog'lanamiz." });
+      setFormData({ name: '', surname: '', phone: '', telegram: '', region: '', service: '', message: '' });
+    } catch (err) {
+      setNotification({ type: 'error', message: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section id="order" className="relative isolate overflow-hidden bg-brand-dark py-20">
-      <img
-        src="https://images.unsplash.com/photo-1608197492762-1e08c9f5a0e1?auto=format&fit=crop&w=1600&q=60"
-        alt="AQVO tabiiy mahsulot bankalari qorong'u fonda"
-        loading="lazy"
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 -z-10 bg-black/70" aria-hidden="true" />
+    <section
+      id="order"
+      className="relative w-full py-20 px-6"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      {/* Qoramtir parda */}
+      <div className="absolute inset-0 bg-black/60" />
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-        <div className="text-white">
-          <h2 className="font-display text-2xl font-extrabold uppercase leading-tight tracking-wide sm:text-3xl">
-            AQVO bilan yangicha ta'mni his eting
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row items-center relative z-10">
+        {/* Chap tomon */}
+        <div className="flex-1 text-white">
+          <h2 className="text-3xl font-bold uppercase leading-tight md:text-4xl drop-shadow-lg">
+            "AQVO" BILAN YANGICHA TA'MNI HIS ETING.
           </h2>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">
-            Buyurtma shaklini to'ldiring — bizning operatorlarimiz siz bilan
-            tez orada bog'lanadi va yetkazib berish tafsilotlarini
-            aniqlashtiradi.
+          <p className="mt-6 text-sm leading-relaxed text-gray-200 md:text-base">
+            Aqvo brendi sizni yangi ta'mlarni kashf etishga taklif qiladi. Eng sifatli
+            va tabiiy mahsulotlar bilan tanishing.
           </p>
-        </div>
+          <div className="mt-8 text-sm text-white space-y-1">
+            <p className="font-semibold text-yellow-300/90">Bog'lanish uchun telefon raqamlarimiz:</p>
+            <p className="font-semibold">📞 Tel: +998957724444</p>
+            <p className="font-semibold">📞 Tel: +998996440101</p>
+          </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="rounded-2xl bg-white/95 p-6 shadow-2xl sm:p-8"
-          aria-labelledby="order-form-heading"
-        >
-          <h3 id="order-form-heading" className="sr-only">
-            Buyurtma berish shakli
-          </h3>
-
-          {submitted && (
-            <p
-              role="status"
-              className="mb-4 rounded-md bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
-            >
-              Buyurtmangiz qabul qilindi! Tez orada siz bilan bog'lanamiz.
-            </p>
-          )}
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="fullName" className="text-xs font-semibold text-brand-dark">
-                Ism familiya
-              </label>
-              <input
-                id="fullName"
-                name="fullName"
-                type="text"
-                required
-                autoComplete="name"
-                value={formData.fullName}
-                onChange={handleChange}
-                placeholder="Ismingizni kiriting"
-                title="Ism familiyangizni kiriting"
-                className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-800 outline-none transition-colors focus:border-brand"
-              />
+          {/* Qo'shimcha ma'lumot */}
+          <div className="mt-8 flex flex-wrap gap-4">
+            <div className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 backdrop-blur-sm">
+              <span className="text-yellow-300">🕐</span>
+              <span className="text-xs">09:00 - 21:00</span>
             </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="phone" className="text-xs font-semibold text-brand-dark">
-                Telefon raqam
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                required
-                autoComplete="tel"
-                pattern="^\+?[0-9\s\-()]{9,15}$"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+998 90 123 45 67"
-                title="Telefon raqamingizni kiriting"
-                className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-800 outline-none transition-colors focus:border-brand"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="address" className="text-xs font-semibold text-brand-dark">
-                Manzil
-              </label>
-              <input
-                id="address"
-                name="address"
-                type="text"
-                required
-                autoComplete="street-address"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="Shahar, tuman, ko'cha"
-                title="Yetkazib berish manzilini kiriting"
-                className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-800 outline-none transition-colors focus:border-brand"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="product" className="text-xs font-semibold text-brand-dark">
-                Mahsulot turi
-              </label>
-              <select
-                id="product"
-                name="product"
-                required
-                value={formData.product}
-                onChange={handleChange}
-                title="Mahsulot turini tanlang"
-                className="rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-800 outline-none transition-colors focus:border-brand"
-              >
-                {PRODUCT_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="delivery" className="text-xs font-semibold text-brand-dark">
-                Yetkazib berish
-              </label>
-              <select
-                id="delivery"
-                name="delivery"
-                required
-                value={formData.delivery}
-                onChange={handleChange}
-                title="Yetkazib berish turini tanlang"
-                className="rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-800 outline-none transition-colors focus:border-brand"
-              >
-                {DELIVERY_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="comment" className="text-xs font-semibold text-brand-dark">
-                Izoh (ixtiyoriy)
-              </label>
-              <textarea
-                id="comment"
-                name="comment"
-                rows={3}
-                value={formData.comment}
-                onChange={handleChange}
-                placeholder="Qo'shimcha izoh qoldiring"
-                title="Qo'shimcha izoh"
-                className="resize-none rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-800 outline-none transition-colors focus:border-brand"
-              />
+            <div className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 backdrop-blur-sm">
+              <span className="text-yellow-300">🚚</span>
+              <span className="text-xs">Bepul yetkazib berish</span>
             </div>
           </div>
+        </div>
+
+        {/* O'ng tomon */}
+        <form
+          className="flex w-full flex-1 flex-col gap-6 bg-black/30 backdrop-blur-sm p-8 rounded-2xl border border-white/10"
+          onSubmit={handleSubmit}
+        >
+          {/* Notification */}
+          {notification && (
+            <div
+              className={`p-4 rounded-md text-center font-medium animate-fade-in-up ${
+                notification.type === 'success'
+                  ? 'bg-green-500/20 text-green-200 border border-green-400/40'
+                  : 'bg-red-500/20 text-red-200 border border-red-400/40'
+              }`}
+            >
+              {notification.message}
+            </div>
+          )}
+
+          <style>{`
+            @keyframes fadeInUp {
+              from { opacity: 0; transform: translateY(10px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-up {
+              animation: fadeInUp 0.4s ease-out;
+            }
+          `}</style>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Ismingiz"
+              className="bg-transparent border-b border-white/50 py-2 text-white outline-none placeholder:text-gray-300 focus:border-yellow-300 transition-colors"
+              required
+              disabled={loading}
+            />
+            <input
+              name="surname"
+              value={formData.surname}
+              onChange={handleChange}
+              placeholder="Familiyangiz"
+              className="bg-transparent border-b border-white/50 py-2 text-white outline-none placeholder:text-gray-300 focus:border-yellow-300 transition-colors"
+              required
+              disabled={loading}
+            />
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Telefon raqamingiz"
+              className="bg-transparent border-b border-white/50 py-2 text-white outline-none placeholder:text-gray-300 focus:border-yellow-300 transition-colors"
+              required
+              disabled={loading}
+            />
+            <input
+              name="telegram"
+              value={formData.telegram}
+              onChange={handleChange}
+              placeholder="Telegram username"
+              className="bg-transparent border-b border-white/50 py-2 text-white outline-none placeholder:text-gray-300 focus:border-yellow-300 transition-colors"
+              disabled={loading}
+            />
+            <select
+              name="region"
+              value={formData.region}
+              onChange={handleChange}
+              className="bg-transparent border-b border-white/50 py-2 text-white outline-none focus:border-yellow-300 transition-colors [&>option]:text-black"
+              required
+              disabled={loading}
+            >
+              <option value="" disabled>Hudud</option>
+              <option value="tashkent">Toshkent</option>
+              <option value="samarkand">Samarqand</option>
+              <option value="bukhara">Buxoro</option>
+              <option value="fergana">Farg'ona</option>
+              <option value="namangan">Namangan</option>
+            </select>
+            <select
+              name="service"
+              value={formData.service}
+              onChange={handleChange}
+              className="bg-transparent border-b border-white/50 py-2 text-white outline-none focus:border-yellow-300 transition-colors [&>option]:text-black"
+              required
+              disabled={loading}
+            >
+              <option value="" disabled>Xizmat turini tanlang</option>
+              <option value="delivery">Yetkazib berish</option>
+              <option value="pickup">Olib ketish</option>
+            </select>
+          </div>
+
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            rows="4"
+            placeholder="Xabar"
+            className="bg-transparent border border-white/50 p-3 text-white outline-none placeholder:text-gray-300 rounded-md focus:border-yellow-300 transition-colors resize-none"
+            disabled={loading}
+          ></textarea>
 
           <button
             type="submit"
-            className="mt-6 w-full rounded-full bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wide text-brand-dark transition-colors hover:bg-accent-dark hover:text-white sm:w-auto sm:px-10"
-            title="Buyurtma berish"
-            aria-label="Buyurtmani yuborish"
+            disabled={loading}
+            className="w-full bg-[#e67e22] py-3 text-white font-bold rounded hover:bg-[#d35400] transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg"
           >
-            Buyurtma berish
+            {loading && (
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            )}
+            {loading ? 'Yuborilmoqda...' : 'Yuborish'}
           </button>
         </form>
       </div>

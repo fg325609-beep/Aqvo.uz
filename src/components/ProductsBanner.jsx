@@ -1,67 +1,107 @@
 import React from 'react';
 import { GiBullHorns } from 'react-icons/gi';
 
+// Rasmlaringiz yo'li
+import bgImage from './img/orqa fon.jpg';
+import cert1 from './img/sertificat.png';
+import cert2 from './img/sertificat (2).png';
+import cert3 from './img/sertificat (3).png';
+import cert4 from './img/sertificat (4).png';
+import bonka from './img/bonka.jpg';
+import pamidorVsBonka from './img/pamidor vs bonka.jpg';
+import tonkaVsBonka from './img/tonka vs bonka.jpg';
+import banner2 from './img/banner (2).jpg';
+
+// Mahsulotlar ma'lumotlari
 const PRODUCTS = [
-  {
-    src: 'https://placehold.co/220x220/7a1414/f2d9b8?text=AQVO+Sous',
-    alt: "AQVO tabiiy pomidor sousi bankada",
-  },
-  {
-    src: 'https://placehold.co/220x220/3d2b1f/e8c99a?text=AQVO+Murabbo',
-    alt: "AQVO uzum murabbosi shisha bankada",
-  },
-  {
-    src: 'https://placehold.co/220x220/c0392b/ffffff?text=AQVO+Ajika',
-    alt: "AQVO achchiq ajika sousi qutida",
-  },
-  {
-    src: 'https://placehold.co/220x220/e67e22/3d1c00?text=Mazali+JIZ',
-    alt: "AQVO Mazali JIZ konservasi bankada",
-  },
+  { id: 1, src: bonka, badge: "YANGI" },
+  { id: 2, src: pamidorVsBonka, badge: "CHEGIRMA" },
+  { id: 3, src: tonkaVsBonka, badge: "BIZNING" },
+  { id: 4, src: banner2, badge: "MAXSUS" },
 ];
+
+function ProductItem({ src, badge }) {
+  return (
+    <div className="relative flex flex-col items-center group">
+      <img
+        src={src}
+        alt={badge}
+        className="h-40 md:h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(241,196,15,0.5)]"
+      />
+      <span className="mt-4 bg-[#f1c40f] text-black font-extrabold px-6 py-1 rounded-sm text-sm tracking-wider uppercase shadow-lg group-hover:bg-yellow-400 transition-colors">
+        {badge}
+      </span>
+    </div>
+  );
+}
 
 export default function ProductsBanner() {
   return (
-    <section
-      id="products"
-      className="bg-brand-light py-8"
-      aria-label="Mahsulotlar banneri"
+    // Butun sahifa uchun orqa fon
+    <div
+      className="w-full flex flex-col"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-2 items-center gap-4 px-4 sm:grid-cols-4 sm:px-6 lg:px-8">
-        {PRODUCTS.slice(0, 2).map((p) => (
-          <img
-            key={p.alt}
-            src={p.src}
-            alt={p.alt}
-            width={220}
-            height={220}
-            loading="lazy"
-            className="mx-auto aspect-square w-full max-w-[140px] rounded-lg object-cover shadow-lg sm:max-w-[160px]"
-          />
-        ))}
-
-        <div className="col-span-2 flex items-center justify-center gap-2 py-4 font-display text-2xl font-extrabold text-brand-dark sm:col-span-4 sm:order-first sm:hidden">
-          <GiBullHorns className="h-8 w-8" aria-hidden="true" />
-          AQVO
+      {/* 1. YUQORI QISM - Mahsulotlar banneri */}
+      <section className="relative w-full py-16 bg-red-800/80 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-10 px-6">
+          <div className="flex w-full justify-around sm:w-2/5">
+            {PRODUCTS.slice(0, 2).map((p) => (
+              <ProductItem key={p.id} {...p} />
+            ))}
+          </div>
+          <div className="flex flex-col items-center text-white">
+            <GiBullHorns className="h-24 w-24 mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" />
+            <span className="font-black text-5xl tracking-[0.2em] drop-shadow-lg">AQVO</span>
+            <p className="text-sm mt-2 text-yellow-300 font-medium">Tabiiy mahsulotlar</p>
+          </div>
+          <div className="flex w-full justify-around sm:w-2/5">
+            {PRODUCTS.slice(2, 4).map((p) => (
+              <ProductItem key={p.id} {...p} />
+            ))}
+          </div>
         </div>
+      </section>
 
-        <div className="col-span-2 hidden items-center justify-center gap-2 font-display text-3xl font-extrabold text-brand-dark sm:col-span-2 sm:flex">
-          <GiBullHorns className="h-10 w-10" aria-hidden="true" />
-          AQVO
+      {/* 2. BREND HAQIDA */}
+      <section className="py-24 px-6 text-center text-white relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent" />
+        <div className="relative z-10">
+          <h2 className="text-5xl font-black uppercase mb-8 drop-shadow-lg tracking-wider">
+            AQVO BRENDI HAQIDA
+          </h2>
+          <p className="max-w-3xl mx-auto text-lg opacity-95 leading-relaxed">
+            Aqvo – sifat va halollikni o'zida mujassam etgan, O'zbekistonda tabiiy
+            oziq-ovqat mahsulotlarini ishlab chiqarishga ixtisoslashgan brend.
+            Har bir mahsulotimiz diqqat bilan tanlangan va eng yuqori sifat
+            standartlariga javob beradi.
+          </p>
         </div>
+      </section>
 
-        {PRODUCTS.slice(2, 4).map((p) => (
-          <img
-            key={p.alt}
-            src={p.src}
-            alt={p.alt}
-            width={220}
-            height={220}
-            loading="lazy"
-            className="mx-auto aspect-square w-full max-w-[140px] rounded-lg object-cover shadow-lg sm:max-w-[160px]"
-          />
-        ))}
-      </div>
-    </section>
+      {/* 3. SERTIFIKATLAR (Yangi seksiyada) */}
+      <section className="py-16 bg-black/40 backdrop-blur-md">
+        <h3 className="text-center text-white text-3xl font-bold mb-10 tracking-wide">
+          BIZNING SERTIFIKATLARIMIZ
+        </h3>
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
+          {[cert1, cert2, cert3, cert4].map((cert, i) => (
+            <div key={i} className="relative group">
+              <img
+                src={cert}
+                alt={`Sertifikat ${i + 1}`}
+                className="w-full h-auto rounded-lg shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl"
+              />
+              <div className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
