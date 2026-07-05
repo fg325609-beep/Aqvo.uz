@@ -55,7 +55,10 @@
   },
   "about": {
     "title": "About AQVO brand",
-    "description": "AQVO is a brand specialized in producing natural and high-quality food products in Uzbekistan. We use raw materials from local farms and preserve the natural taste and beneficial properties of products using modern technologies. Through quality control at every stage, we provide you with only the best."
+    "description": "AQVO is a brand specialized in producing natural and high-quality food products in Uzbekistan. We use raw materials from local farms and preserve the natural taste and beneficial properties of products using modern technologies. Through quality control at every stage, we provide you with only the best.",
+    "quality": "Quality",
+    "natural": "Natural",
+    "certified": "Certified"
   },
   "cta": {
     "title": "YOUR MOMENTS WITH AQVO",

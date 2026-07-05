@@ -1,6 +1,8 @@
 import React from 'react';
-import { GiBullHorns } from 'react-icons/gi';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { GiBullHorns } from 'react-icons/gi';
+import ProductCard from './ProductCard.jsx';
 import bgImage from './img/orqa fon.jpg';
 import cert1 from './img/sertificat.png';
 import cert2 from './img/sertificat (2).png';
@@ -20,28 +22,12 @@ const PRODUCTS = [
 
 const CERTIFICATES = [cert1, cert2, cert3, cert4];
 
-function ProductItem({ src, badgeKey }) {
-  const { t } = useTranslation();
-  return (
-    <div className="relative flex flex-col items-center group">
-      <img
-        src={src}
-        alt={t(`products.${badgeKey}`)}
-        className="h-40 md:h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(241,196,15,0.5)]"
-      />
-      <span className="mt-4 bg-[#f1c40f] text-black font-extrabold px-6 py-1 rounded-sm text-sm tracking-wider uppercase shadow-lg group-hover:bg-yellow-400 transition-colors">
-        {t(`products.${badgeKey}`)}
-      </span>
-    </div>
-  );
-}
-
 export default function ProductsBanner() {
   const { t } = useTranslation();
   return (
     <section
       id="products"
-      className="w-full flex flex-col"
+      className="w-full relative"
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundAttachment: 'fixed',
@@ -49,52 +35,77 @@ export default function ProductsBanner() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="relative w-full py-16 bg-red-800/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-10 px-6">
-          <div className="flex w-full justify-around sm:w-2/5">
-            {PRODUCTS.slice(0, 2).map((p) => (
-              <ProductItem key={p.id} src={p.src} badgeKey={p.badge} />
-            ))}
-          </div>
-          <div className="flex flex-col items-center text-white">
-            <GiBullHorns className="h-24 w-24 mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" />
-            <span className="font-black text-5xl tracking-[0.2em] drop-shadow-lg">AQVO</span>
-            <p className="text-sm mt-2 text-yellow-300 font-medium">{t('products.subtitle')}</p>
-          </div>
-          <div className="flex w-full justify-around sm:w-2/5">
-            {PRODUCTS.slice(2, 4).map((p) => (
-              <ProductItem key={p.id} src={p.src} badgeKey={p.badge} />
+      <div className="relative py-20 bg-gradient-to-b from-red-900/90 via-red-800/80 to-red-900/90 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center mb-16 text-center"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <GiBullHorns className="h-12 w-12 text-[#b89564] drop-shadow-lg" />
+              <h2 className="font-display text-4xl sm:text-5xl font-black tracking-[0.15em] text-white drop-shadow-lg">
+                AQVO
+              </h2>
+            </div>
+            <p className="text-[#b89564] text-sm font-medium tracking-widest uppercase">
+              {t('products.subtitle')}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {PRODUCTS.map((product, i) => (
+              <ProductCard key={product.id} src={product.src} badgeKey={product.badge} index={i} />
             ))}
           </div>
         </div>
       </div>
 
-      <div className="py-24 px-6 text-center text-white relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent" />
-        <div className="relative z-10">
-          <h2 className="text-5xl font-black uppercase mb-8 drop-shadow-lg tracking-wider">
+      <div className="py-24 px-6 text-center text-white bg-gradient-to-b from-black/50 to-black/30">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-4xl sm:text-5xl font-black uppercase mb-6 drop-shadow-lg tracking-wider">
             {t('products.title')}
           </h2>
-          <p className="max-w-3xl mx-auto text-lg opacity-95 leading-relaxed">
+          <p className="max-w-3xl mx-auto text-base sm:text-lg opacity-90 leading-relaxed">
             {t('products.description')}
           </p>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="py-16 bg-black/40 backdrop-blur-md">
-        <h3 className="text-center text-white text-3xl font-bold mb-10 tracking-wide">
+      <div className="py-16 bg-black/50 backdrop-blur-md">
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center text-white text-2xl sm:text-3xl font-bold mb-10 tracking-wide"
+        >
           {t('certificates.title')}
-        </h3>
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
+        </motion.h3>
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6">
           {CERTIFICATES.map((cert, i) => (
-            <div key={i} className="relative group">
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              className="relative group rounded-xl overflow-hidden shadow-xl"
+            >
               <img
                 src={cert}
                 alt={`Certificate ${i + 1}`}
-                className="w-full h-auto rounded-lg shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl"
+                className="w-full h-auto transition-all duration-500"
               />
-              <div className="absolute inset-0 rounded-lg bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
-            </div>
+              <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
+            </motion.div>
           ))}
         </div>
       </div>

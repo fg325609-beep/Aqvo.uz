@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
-import { HiX } from 'react-icons/hi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, ShoppingBag, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendToTelegram } from '../telegram.js';
 
 const REGIONS = ['tashkent', 'samarkand', 'bukhara', 'fergana', 'namangan', 'andijan', 'khorezm', 'surkhandarya', 'kashkadarya'];
 const SERVICES = ['delivery', 'pickup'];
 
-export default function HeroSection() {
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+export default function Hero() {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -15,21 +29,14 @@ export default function HeroSection() {
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState(null);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-    setNotification(null);
-  };
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const handleChange = (e) => setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setNotification(null);
     try {
-      await sendToTelegram(formData, "Hero modal");
+      await sendToTelegram(formData, 'Hero modal');
       setNotification({ type: 'success', message: t('modal.success') });
       setFormData({ firstName: '', lastName: '', phone: '', telegram: '', region: '', service: '', message: '' });
     } catch {
@@ -41,171 +48,200 @@ export default function HeroSection() {
 
   return (
     <>
-      <style>{`
-        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .animate-scroll { display: inline-block; animation: scrollText 20s linear infinite; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in-up { animation: fadeInUp 0.5s ease-out; }
-      `}</style>
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#901717] via-[#7a1212] to-[#5c0d0d]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#b89564]/10 rounded-full blur-3xl" />
 
-      <section
-        id="hero"
-        className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#901717] pt-20"
-      >
-        <div className="w-full overflow-hidden whitespace-nowrap">
-          <h1 className="animate-scroll font-display text-[8rem] font-black uppercase tracking-widest text-white md:text-[12rem] lg:text-[16rem]">
-            {t('hero.title')}
-          </h1>
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto"
+        >
+          <motion.div variants={itemVariants} className="overflow-hidden mb-4">
+            <p className="text-[#b89564] font-semibold text-sm sm:text-base tracking-[0.3em] uppercase">
+              AQVO
+            </p>
+          </motion.div>
 
-        <div className="absolute bottom-10 left-0 flex w-full max-w-7xl items-end justify-between px-6 sm:px-10 lg:px-16">
-          <div className="max-w-md text-sm font-medium leading-relaxed text-white/90 sm:text-base">
-            <p>{t('hero.description')}</p>
-          </div>
-
-          <button
-            onClick={toggleModal}
-            className="group flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full border border-white/40 bg-[#4a0b0b] transition-all hover:scale-105 hover:bg-[#3a0808] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] sm:h-24 sm:w-24"
-            aria-label={t('hero.orderButton')}
-            title={t('hero.orderButton')}
+          <motion.h1
+            variants={itemVariants}
+            className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] font-black uppercase tracking-wider text-white leading-none"
           >
-            <img
-              src="src/components/img/madal logo.png"
-              alt="AQVO"
-              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-110 sm:h-12 sm:w-12"
-            />
-          </button>
-        </div>
+            {t('hero.title')}
+          </motion.h1>
+
+          <motion.p
+            variants={itemVariants}
+            className="mt-6 max-w-xl mx-auto text-white/70 text-sm sm:text-base leading-relaxed"
+          >
+            {t('hero.description')}
+          </motion.p>
+
+          <motion.div variants={itemVariants} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#b89564] to-[#a07f52] px-8 py-3.5 text-sm font-bold text-white shadow-2xl hover:shadow-[#b89564]/40 transition-shadow"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              {t('hero.orderButton')}
+            </motion.button>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center pt-2"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
+          </motion.div>
+        </motion.div>
       </section>
 
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={t('modal.title')}
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-md transition-opacity duration-300 ${
-          isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={(e) => { if (e.target === e.currentTarget && !loading) toggleModal(); }}
-      >
-        <div
-          className={`relative w-full max-w-3xl rounded-lg bg-gray-600/95 p-6 shadow-2xl transition-all duration-300 sm:p-10 ${
-            isModalOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'
-          }`}
-        >
-          <button
-            onClick={toggleModal}
-            disabled={loading}
-            className="absolute right-4 top-4 text-white transition-colors hover:text-gray-300 disabled:opacity-50"
-            aria-label="Close"
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-md"
+            onClick={(e) => { if (e.target === e.currentTarget && !loading) setIsModalOpen(false); }}
           >
-            <HiX className="h-7 w-7" />
-          </button>
-
-          <div className="mb-4 flex flex-col items-center justify-center border-b border-white/10 pb-4">
-            <img
-              src="src/components/img/madal logo.png"
-              alt="AQVO"
-              className="h-16 w-auto object-contain drop-shadow-md sm:h-20"
-            />
-          </div>
-
-          {notification && (
-            <div
-              className={`mb-4 p-4 rounded-md text-center font-medium animate-fade-in-up ${
-                notification.type === 'success'
-                  ? 'bg-green-500/20 text-green-200 border border-green-400/40'
-                  : 'bg-red-500/20 text-red-200 border border-red-400/40'
-              }`}
-              role="alert"
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="relative w-full max-w-2xl rounded-2xl bg-gradient-to-b from-gray-700 to-gray-800 p-6 sm:p-10 shadow-2xl border border-white/10"
             >
-              {notification.message}
-            </div>
-          )}
-
-          <form className="mt-4 flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div className="flex flex-col">
-                <input
-                  type="text" name="firstName" value={formData.firstName} onChange={handleChange}
-                  placeholder={t('modal.firstName')}
-                  className="border-b border-white/50 bg-transparent py-2 text-white placeholder-white/70 focus:border-white focus:outline-none"
-                  required disabled={loading}
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="text" name="lastName" value={formData.lastName} onChange={handleChange}
-                  placeholder={t('modal.lastName')}
-                  className="border-b border-white/50 bg-transparent py-2 text-white placeholder-white/70 focus:border-white focus:outline-none"
-                  required disabled={loading}
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="tel" name="phone" value={formData.phone} onChange={handleChange}
-                  placeholder={t('modal.phone')}
-                  className="border-b border-white/50 bg-transparent py-2 text-white placeholder-white/70 focus:border-white focus:outline-none"
-                  required disabled={loading}
-                />
-              </div>
-              <div className="flex flex-col">
-                <input
-                  type="text" name="telegram" value={formData.telegram} onChange={handleChange}
-                  placeholder={t('modal.telegram')}
-                  className="border-b border-white/50 bg-transparent py-2 text-white placeholder-white/70 focus:border-white focus:outline-none"
-                  disabled={loading}
-                />
-              </div>
-              <div className="flex flex-col">
-                <select
-                  name="region" value={formData.region} onChange={handleChange}
-                  className="border-b border-white/50 bg-transparent py-2 text-white focus:border-white focus:outline-none [&>option]:bg-gray-700 [&>option]:text-white"
-                  required disabled={loading}
-                >
-                  <option value="" disabled>{t('modal.region')}</option>
-                  {REGIONS.map((r) => (
-                    <option key={r} value={r}>{t(`regions.${r}`)}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <select
-                  name="service" value={formData.service} onChange={handleChange}
-                  className="border-b border-white/50 bg-transparent py-2 text-white focus:border-white focus:outline-none [&>option]:bg-gray-700 [&>option]:text-white"
-                  required disabled={loading}
-                >
-                  <option value="" disabled>{t('modal.service')}</option>
-                  {SERVICES.map((s) => (
-                    <option key={s} value={s}>{t(`services.${s}`)}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              <textarea
-                name="message" value={formData.message} onChange={handleChange}
-                placeholder={t('modal.message')} rows="4"
-                className="resize-none rounded-md border border-white/50 bg-transparent p-3 text-white placeholder-white/70 focus:border-white focus:outline-none"
+              <button
+                onClick={() => setIsModalOpen(false)}
                 disabled={loading}
-              />
-            </div>
+                className="absolute right-4 top-4 text-white/60 hover:text-white transition-colors disabled:opacity-50"
+              >
+                <X className="h-6 w-6" />
+              </button>
 
-            <button
-              type="submit" disabled={loading}
-              className="mt-2 w-full rounded-md bg-[#e5801a] py-3.5 text-lg font-bold text-white transition-all hover:bg-[#cf7112] focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-            >
-              {loading && (
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-              )}
-              {loading ? t('modal.sending') : t('modal.submit')}
-            </button>
-          </form>
-        </div>
-      </div>
+              <div className="mb-6 text-center">
+                <img
+                  src="src/components/img/madal logo.png"
+                  alt="AQVO"
+                  className="h-16 w-auto mx-auto object-contain drop-shadow-xl"
+                />
+              </div>
+
+              <AnimatePresence>
+                {notification && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className={`mb-4 p-4 rounded-xl text-sm font-medium flex items-center gap-3 ${
+                      notification.type === 'success'
+                        ? 'bg-green-500/15 text-green-200 border border-green-400/30'
+                        : 'bg-red-500/15 text-red-200 border border-red-400/30'
+                    }`}
+                    role="alert"
+                  >
+                    {notification.type === 'success' ? <CheckCircle className="h-5 w-5 flex-shrink-0" /> : <AlertCircle className="h-5 w-5 flex-shrink-0" />}
+                    {notification.message}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {[
+                    { name: 'firstName', type: 'text', placeholder: t('modal.firstName'), required: true },
+                    { name: 'lastName', type: 'text', placeholder: t('modal.lastName'), required: true },
+                    { name: 'phone', type: 'tel', placeholder: t('modal.phone'), required: true },
+                    { name: 'telegram', type: 'text', placeholder: t('modal.telegram'), required: false },
+                  ].map((field) => (
+                    <div key={field.name}>
+                      <input
+                        type={field.type}
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleChange}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        disabled={loading}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-[#b89564] focus:ring-1 focus:ring-[#b89564]/30 transition-all text-sm"
+                      />
+                    </div>
+                  ))}
+                  <select
+                    name="region"
+                    value={formData.region}
+                    onChange={handleChange}
+                    required
+                    disabled={loading}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#b89564] focus:ring-1 focus:ring-[#b89564]/30 transition-all text-sm [&>option]:bg-gray-700"
+                  >
+                    <option value="" disabled>{t('modal.region')}</option>
+                    {REGIONS.map((r) => (
+                      <option key={r} value={r}>{t(`regions.${r}`)}</option>
+                    ))}
+                  </select>
+                  <select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    required
+                    disabled={loading}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#b89564] focus:ring-1 focus:ring-[#b89564]/30 transition-all text-sm [&>option]:bg-gray-700"
+                  >
+                    <option value="" disabled>{t('modal.service')}</option>
+                    {SERVICES.map((s) => (
+                      <option key={s} value={s}>{t(`services.${s}`)}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder={t('modal.message')}
+                  rows={3}
+                  disabled={loading}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-[#b89564] focus:ring-1 focus:ring-[#b89564]/30 transition-all text-sm resize-none"
+                />
+
+                <motion.button
+                  type="submit"
+                  disabled={loading}
+                  whileHover={!loading ? { scale: 1.01 } : {}}
+                  whileTap={!loading ? { scale: 0.99 } : {}}
+                  className="w-full rounded-xl bg-gradient-to-r from-[#e5801a] to-[#cf7112] py-3.5 text-sm font-bold text-white shadow-lg hover:shadow-[#e5801a]/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      {t('modal.sending')}
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="h-4 w-4" />
+                      {t('modal.submit')}
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

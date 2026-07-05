@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const GALLERY_TOP = [
@@ -21,7 +22,7 @@ const GALLERY_BOTTOM = [
 export default function Gallery() {
   const { t } = useTranslation();
   return (
-    <section id="gallery" className="bg-[#901717] py-10 overflow-hidden w-full">
+    <section id="gallery" className="bg-gradient-to-b from-[#901717] to-[#7a1212] py-16 overflow-hidden w-full">
       <style>{`
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
@@ -30,12 +31,17 @@ export default function Gallery() {
         .animate-left:hover, .animate-right:hover { animation-play-state: paused; }
       `}</style>
 
-      <div className="text-center mb-8 px-6">
-        <h2 className="font-display text-3xl font-bold uppercase tracking-wider text-white drop-shadow-lg">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-10 px-6"
+      >
+        <h2 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wider text-white drop-shadow-lg">
           {t('gallery.title')}
         </h2>
-        <p className="text-white/70 text-sm mt-2">{t('gallery.subtitle')}</p>
-      </div>
+        <p className="text-white/60 text-sm mt-2">{t('gallery.subtitle')}</p>
+      </motion.div>
 
       <div className="flex w-full flex-col gap-6">
         <div className="flex w-full overflow-hidden">
@@ -45,7 +51,7 @@ export default function Gallery() {
                 <img
                   src={src}
                   alt="AQVO"
-                  className="h-40 w-40 rounded-2xl object-cover shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl"
+                  className="h-36 w-36 sm:h-44 sm:w-44 rounded-2xl object-cover shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
               </div>
@@ -60,7 +66,7 @@ export default function Gallery() {
                 <img
                   src={src}
                   alt="AQVO"
-                  className="h-40 w-40 rounded-2xl object-cover shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl"
+                  className="h-36 w-36 sm:h-44 sm:w-44 rounded-2xl object-cover shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
               </div>

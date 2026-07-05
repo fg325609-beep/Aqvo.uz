@@ -55,7 +55,10 @@
   },
   "about": {
     "title": "AQVO brendi haqida",
-    "description": "AQVO — O'zbekistonda tabiiy va sifatli oziq-ovqat mahsulotlarini ishlab chiqarishga ixtisoslashgan brend. Biz mahalliy fermer xo'jaliklaridan olingan xomashyolardan foydalanamiz va zamonaviy texnologiyalar yordamida mahsulotning tabiiy ta'mi va foydali xususiyatlarini saqlab qolamiz. Har bir bosqichda sifat nazorati orqali sizga faqat eng yaxshisini taqdim etamiz."
+    "description": "AQVO — O'zbekistonda tabiiy va sifatli oziq-ovqat mahsulotlarini ishlab chiqarishga ixtisoslashgan brend. Biz mahalliy fermer xo'jaliklaridan olingan xomashyolardan foydalanamiz va zamonaviy texnologiyalar yordamida mahsulotning tabiiy ta'mi va foydali xususiyatlarini saqlab qolamiz. Har bir bosqichda sifat nazorati orqali sizga faqat eng yaxshisini taqdim etamiz.",
+    "quality": "Sifat",
+    "natural": "Tabiiy",
+    "certified": "Sertifikatlangan"
   },
   "cta": {
     "title": "SIZNING AQVO BILAN LAHZALARINGIZ",
