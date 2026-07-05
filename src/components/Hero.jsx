@@ -7,12 +7,16 @@ import { sendToTelegram } from '../telegram.js';
 const REGIONS = ['tashkent', 'samarkand', 'bukhara', 'fergana', 'namangan', 'andijan', 'khorezm', 'surkhandarya', 'kashkadarya'];
 const SERVICES = ['delivery', 'pickup'];
 
+const marqueeVariants = {
+  animate: {
+    x: ['100%', '-100%'],
+    transition: { x: { repeat: Infinity, repeatType: "loop", duration: 25, ease: "linear" } },
+  },
+};
+
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
 };
 
 const itemVariants = {
@@ -48,10 +52,21 @@ export default function Hero() {
 
   return (
     <>
+      <style>{`
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .animate-scroll { display: inline-block; animation: scrollText 20s linear infinite; }
+      `}</style>
+
       <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#901717] via-[#7a1212] to-[#5c0d0d]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)]" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#b89564]/10 rounded-full blur-3xl" />
+
+        <div className="absolute top-20 w-full overflow-hidden whitespace-nowrap opacity-10 pointer-events-none">
+          <motion.div variants={marqueeVariants} animate="animate" className="inline-block">
+            <h2 className="text-[150px] font-black uppercase text-white tracking-widest">
+              AQVO TABIIY MAHSULOTLAR AQVO TABIIY MAHSULOTLAR
+            </h2>
+          </motion.div>
+        </div>
 
         <motion.div
           variants={containerVariants}
@@ -59,18 +74,11 @@ export default function Hero() {
           animate="visible"
           className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto"
         >
-          <motion.div variants={itemVariants} className="overflow-hidden mb-4">
-            <p className="text-[#b89564] font-semibold text-sm sm:text-base tracking-[0.3em] uppercase">
-              AQVO
-            </p>
+          <motion.div variants={itemVariants} className="w-full overflow-hidden whitespace-nowrap">
+            <h1 className="animate-scroll font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] font-black uppercase tracking-wider text-white leading-none">
+              {t('hero.title')}
+            </h1>
           </motion.div>
-
-          <motion.h1
-            variants={itemVariants}
-            className="font-display text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] font-black uppercase tracking-wider text-white leading-none"
-          >
-            {t('hero.title')}
-          </motion.h1>
 
           <motion.p
             variants={itemVariants}
@@ -79,7 +87,7 @@ export default function Hero() {
             {t('hero.description')}
           </motion.p>
 
-          <motion.div variants={itemVariants} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <motion.div variants={itemVariants} className="mt-10 flex justify-center">
             <motion.button
               onClick={() => setIsModalOpen(true)}
               whileHover={{ scale: 1.03 }}
