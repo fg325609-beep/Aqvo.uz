@@ -1,25 +1,11 @@
 import React from 'react';
-import { GiBullHorns } from 'react-icons/gi';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
+  const { t } = useTranslation();
   return (
-    <footer className="bg-brand px-4 py-6 text-center text-white sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 text-xs sm:flex-row sm:justify-between sm:text-sm">
-        <a
-          href="#hero"
-          className="flex items-center gap-1.5 font-display font-bold"
-          aria-label="AQVO — bosh sahifaga qaytish"
-          title="AQVO bosh sahifasi"
-        >
-          <GiBullHorns className="h-4 w-4" aria-hidden="true" />
-          AQVO
-        </a>
-        <p>
-          &copy; {year} AQVO. Barcha huquqlar himoyalangan.
-        </p>
-      </div>
+    <footer className="w-full bg-[#3a1111] py-8 text-center text-white/70 text-sm">
+      <p>&copy; {new Date().getFullYear()} AQVO. {t('footer.rights')}</p>
     </footer>
   );
 }

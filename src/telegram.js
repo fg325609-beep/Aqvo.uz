@@ -1,14 +1,7 @@
 const CHAT_ID = "6660879147";
 const BOT_TOKEN = "8765397823:AAG5pg9Fxxo3rjFyFQKZyyA2SU-II5Y2zk0";
-
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
-/**
- * Send order data to Telegram chat
- * @param {Object} data - Form data object
- * @param {string} source - Form source identifier (e.g. "Hero modal", "Order section")
- * @returns {Promise<Object>} - Response from Telegram API
- */
 export async function sendToTelegram(data, source = "Buyurtma") {
   const fields = [
     `📦 *Yangi buyurtma — ${source}*`,

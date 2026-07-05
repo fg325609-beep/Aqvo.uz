@@ -1,38 +1,42 @@
 import React from 'react';
 import { HiX } from 'react-icons/hi';
 import { GiBullHorns } from 'react-icons/gi';
+import { useTranslation } from 'react-i18next';
 
-const NAV_LINKS = [
-  { label: "Bosh sahifa", href: "#hero" },
-  { label: "Mahsulotlar", href: "#products" },
-  { label: "Brend haqida", href: "#about" },
-  { label: "Sertifikatlar", href: "#certificates" },
-  { label: "Buyurtma berish", href: "#order" },
+const LANGUAGES = [
+  { code: 'uz', label: 'UZ' },
+  { code: 'ru', label: 'RU' },
+  { code: 'en', label: 'EN' },
 ];
 
-const LANGUAGES = ["UZ", "RU", "EN"];
-
 export default function MobileMenu({ isOpen, onClose }) {
+  const { t, i18n } = useTranslation();
+
+  const NAV_LINKS = [
+    { label: t('nav.home'), href: '#hero' },
+    { label: t('nav.products'), href: '#products' },
+    { label: t('nav.about'), href: '#about' },
+    { label: t('nav.contact'), href: '#order' },
+  ];
+
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`fixed inset-0 z-40 bg-black/60 transition-opacity duration-300 md:hidden ${
-          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Drawer */}
       <aside
         id="mobile-drawer-menu"
         className={`fixed right-0 top-0 z-50 h-full w-64 max-w-[80vw] transform bg-gray-100 text-brand-dark shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         role="dialog"
         aria-modal="true"
-        aria-label="Mobil navigatsiya menyusi"
+        aria-label="Mobile menu"
       >
         <div className="flex items-center justify-between border-b border-gray-300 px-5 py-4">
           <span className="flex items-center gap-2 font-display text-lg font-extrabold">
@@ -43,8 +47,7 @@ export default function MobileMenu({ isOpen, onClose }) {
             type="button"
             onClick={onClose}
             className="rounded-md p-1 text-brand-dark"
-            aria-label="Menyuni yopish"
-            title="Menyuni yopish"
+            aria-label="Close menu"
           >
             <HiX className="h-6 w-6" aria-hidden="true" />
           </button>
@@ -57,7 +60,6 @@ export default function MobileMenu({ isOpen, onClose }) {
                 href={link.href}
                 onClick={onClose}
                 className="block rounded-md px-2 py-3 transition-colors hover:bg-brand/10"
-                title={link.label}
               >
                 {link.label}
               </a>
@@ -65,16 +67,19 @@ export default function MobileMenu({ isOpen, onClose }) {
           ))}
         </ul>
 
-        <div className="mt-2 flex gap-2 px-5" role="group" aria-label="Tilni tanlash">
+        <div className="mt-2 flex gap-2 px-5" role="group" aria-label="Language selection">
           {LANGUAGES.map((lang) => (
             <button
-              key={lang}
+              key={lang.code}
               type="button"
-              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-bold text-brand-dark transition-colors hover:bg-brand hover:text-white"
-              title={`Tilni ${lang} ga o'zgartirish`}
-              aria-label={`Tilni ${lang} ga o'zgartirish`}
+              onClick={() => { i18n.changeLanguage(lang.code); onClose(); }}
+              className={`rounded-md border px-3 py-1.5 text-xs font-bold transition-colors ${
+                i18n.language === lang.code
+                  ? 'bg-brand text-white border-brand'
+                  : 'border-gray-300 bg-white text-brand-dark hover:bg-brand hover:text-white'
+              }`}
             >
-              {lang}
+              {lang.label}
             </button>
           ))}
         </div>

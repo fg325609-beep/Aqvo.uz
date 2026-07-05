@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "about": "Biz haqimizda",
+    "products": "Mahsulotlar",
+    "gallery": "Galereya",
+    "contact": "Bog'lanish",
+    "language": "Til"
+  },
+  "hero": {
+    "title": "Tabiiy Mahsulotlar",
+    "description": "AQVO – O'zbekistonda birinchi bo'lib sifat va halollikni o'zida mujassam etgan, jiz mahsulotlarini yangicha ta'm va zamonaviy dizaynda taqdim etuvchi yetakchi brend.",
+    "orderButton": "Buyurtma berish"
+  },
+  "modal": {
+    "title": "Buyurtma berish",
+    "firstName": "Ismingiz",
+    "lastName": "Familiyangiz",
+    "phone": "Telefon raqamingiz",
+    "telegram": "Telegram username",
+    "region": "Hudud",
+    "service": "Xizmat turini tanlang",
+    "message": "Xabar",
+    "submit": "Yuborish",
+    "sending": "Yuborilmoqda...",
+    "success": "Buyurtmangiz qabul qilindi! Tez orada siz bilan bog'lanamiz.",
+    "error": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring."
+  },
+  "regions": {
+    "tashkent": "Toshkent",
+    "samarkand": "Samarqand",
+    "bukhara": "Buxoro",
+    "fergana": "Farg'ona",
+    "namangan": "Namangan",
+    "andijan": "Andijon",
+    "khorezm": "Xorazm",
+    "surkhandarya": "Surxondaryo",
+    "kashkadarya": "Qashqadaryo"
+  },
+  "services": {
+    "delivery": "Yetkazib berish",
+    "pickup": "Olib ketish"
+  },
+  "products": {
+    "title": "AQVO BRENDI HAQIDA",
+    "description": "Aqvo – sifat va halollikni o'zida mujassam etgan, O'zbekistonda tabiiy oziq-ovqat mahsulotlarini ishlab chiqarishga ixtisoslashgan brend. Har bir mahsulotimiz diqqat bilan tanlangan va eng yuqori sifat standartlariga javob beradi.",
+    "new": "YANGI",
+    "discount": "CHEGIRMA",
+    "our": "BIZNING",
+    "special": "MAXSUS",
+    "subtitle": "Tabiiy mahsulotlar"
+  },
+  "certificates": {
+    "title": "BIZNING SERTIFIKATLARIMIZ"
+  },
+  "about": {
+    "title": "AQVO brendi haqida",
+    "description": "AQVO — O'zbekistonda tabiiy va sifatli oziq-ovqat mahsulotlarini ishlab chiqarishga ixtisoslashgan brend. Biz mahalliy fermer xo'jaliklaridan olingan xomashyolardan foydalanamiz va zamonaviy texnologiyalar yordamida mahsulotning tabiiy ta'mi va foydali xususiyatlarini saqlab qolamiz. Har bir bosqichda sifat nazorati orqali sizga faqat eng yaxshisini taqdim etamiz."
+  },
+  "cta": {
+    "title": "SIZNING AQVO BILAN LAHZALARINGIZ",
+    "instagram": "Bizning Instagram",
+    "telegram": "Bizning Telegram"
+  },
+  "gallery": {
+    "title": "BIZNING GALEREYA",
+    "subtitle": "Mahsulotlarimizning eng yaxshi lavhalari"
+  },
+  "order": {
+    "title": "\"AQVO\" BILAN YANGICHA TA'MNI HIS ETING.",
+    "description": "Aqvo brendi sizni yangi ta'mlarni kashf etishga taklif qiladi. Eng sifatli va tabiiy mahsulotlar bilan tanishing.",
+    "contactLabel": "Bog'lanish uchun telefon raqamlarimiz:",
+    "hours": "09:00 - 21:00",
+    "freeDelivery": "Bepul yetkazib berish",
+    "name": "Ismingiz",
+    "surname": "Familiyangiz",
+    "phone": "Telefon raqamingiz",
+    "telegram": "Telegram username",
+    "region": "Hudud",
+    "service": "Xizmat turini tanlang",
+    "message": "Xabar",
+    "submit": "Yuborish",
+    "sending": "Yuborilmoqda..."
+  },
+  "footer": {
+    "rights": "Barcha huquqlar himoyalangan."
+  }
+}

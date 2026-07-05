@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "products": "Products",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Natural Products",
+    "description": "AQVO is the first leading brand in Uzbekistan that combines quality and honesty, presenting kazy products in a new taste and modern design.",
+    "orderButton": "Place Order"
+  },
+  "modal": {
+    "title": "Place Order",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "telegram": "Telegram username",
+    "region": "Region",
+    "service": "Select service type",
+    "message": "Message",
+    "submit": "Submit",
+    "sending": "Sending...",
+    "success": "Your order has been accepted! We will contact you soon.",
+    "error": "An error occurred. Please try again."
+  },
+  "regions": {
+    "tashkent": "Tashkent",
+    "samarkand": "Samarkand",
+    "bukhara": "Bukhara",
+    "fergana": "Fergana",
+    "namangan": "Namangan",
+    "andijan": "Andijan",
+    "khorezm": "Khorezm",
+    "surkhandarya": "Surkhandarya",
+    "kashkadarya": "Kashkadarya"
+  },
+  "services": {
+    "delivery": "Delivery",
+    "pickup": "Pickup"
+  },
+  "products": {
+    "title": "ABOUT AQVO BRAND",
+    "description": "Aqvo is a brand that embodies quality and honesty, specializing in the production of natural food products in Uzbekistan. Each product is carefully selected and meets the highest quality standards.",
+    "new": "NEW",
+    "discount": "DISCOUNT",
+    "our": "OUR",
+    "special": "SPECIAL",
+    "subtitle": "Natural products"
+  },
+  "certificates": {
+    "title": "OUR CERTIFICATES"
+  },
+  "about": {
+    "title": "About AQVO brand",
+    "description": "AQVO is a brand specialized in producing natural and high-quality food products in Uzbekistan. We use raw materials from local farms and preserve the natural taste and beneficial properties of products using modern technologies. Through quality control at every stage, we provide you with only the best."
+  },
+  "cta": {
+    "title": "YOUR MOMENTS WITH AQVO",
+    "instagram": "Our Instagram",
+    "telegram": "Our Telegram"
+  },
+  "gallery": {
+    "title": "OUR GALLERY",
+    "subtitle": "The best shots of our products"
+  },
+  "order": {
+    "title": "EXPERIENCE A NEW TASTE WITH AQVO.",
+    "description": "AQVO brand invites you to discover new flavors. Get acquainted with the highest quality and natural products.",
+    "contactLabel": "Our contact phone numbers:",
+    "hours": "09:00 - 21:00",
+    "freeDelivery": "Free delivery",
+    "name": "First Name",
+    "surname": "Last Name",
+    "phone": "Phone Number",
+    "telegram": "Telegram username",
+    "region": "Region",
+    "service": "Select service type",
+    "message": "Message",
+    "submit": "Submit",
+    "sending": "Sending..."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}
