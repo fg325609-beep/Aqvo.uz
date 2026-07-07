@@ -19,6 +19,25 @@ export default {
         display: ['"Montserrat"', 'sans-serif'],
         body: ['"Inter"', 'sans-serif'],
       },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
+        'marquee-left': 'marqueeLeft 40s linear infinite',
+        'marquee-right': 'marqueeRight 40s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        marqueeLeft: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        marqueeRight: {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
     },
   },
   plugins: [],

@@ -23,14 +23,6 @@ export default function Gallery() {
   const { t } = useTranslation();
   return (
     <section id="gallery" className="bg-gradient-to-b from-[#901717] to-[#7a1212] py-16 overflow-hidden w-full">
-      <style>{`
-        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-        .animate-left { animation: scrollLeft 40s linear infinite; }
-        .animate-right { animation: scrollRight 40s linear infinite; }
-        .animate-left:hover, .animate-right:hover { animation-play-state: paused; }
-      `}</style>
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,14 +30,14 @@ export default function Gallery() {
         className="text-center mb-10 px-6"
       >
         <h2 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wider text-white drop-shadow-lg">
-          {t('gallery.title')}
+          SIZNING AQVO BILAN LAHZALARINGIZ
         </h2>
         <p className="text-white/60 text-sm mt-2">{t('gallery.subtitle')}</p>
       </motion.div>
 
       <div className="flex w-full flex-col gap-6">
         <div className="flex w-full overflow-hidden">
-          <div className="flex gap-3 animate-left px-3">
+          <div className="flex gap-3 animate-marquee-left px-3">
             {[...GALLERY_TOP, ...GALLERY_TOP].map((src, i) => (
               <div key={`top-${i}`} className="relative group flex-shrink-0">
                 <img
@@ -60,7 +52,7 @@ export default function Gallery() {
         </div>
 
         <div className="flex w-full overflow-hidden">
-          <div className="flex gap-3 animate-right px-3">
+          <div className="flex gap-3 animate-marquee-right px-3">
             {[...GALLERY_BOTTOM, ...GALLERY_BOTTOM].map((src, i) => (
               <div key={`bottom-${i}`} className="relative group flex-shrink-0">
                 <img

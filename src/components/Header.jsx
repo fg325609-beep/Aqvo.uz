@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiOutlineMenu, HiX } from 'react-icons/hi';
 import { MdArrowDropDown } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
 const LANGUAGES = [
-  { code: 'uz', label: 'UZB' },
-  { code: 'en', label: 'ENG' },
-  { code: 'ru', label: 'RUS' },
+  { code: 'uz', label: 'UZ' },
+  { code: 'ru', label: 'RU' },
+  { code: 'en', label: 'EN' },
 ];
 
 export default function Header() {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen((o) => !o);
   const changeLang = (code) => {
@@ -22,7 +29,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="absolute left-0 top-6 z-40 w-full px-4 sm:px-6 lg:px-8">
+      <header className={`fixed left-0 top-0 z-50 w-full px-4 sm:px-6 lg:px-8 transition-all duration-500 ${
+        scrolled
+          ? 'bg-[#2a0808]/95 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.3)] border-b border-white/5 pt-2 pb-2'
+          : 'bg-transparent pt-6'
+      }`}>
         <nav
           className="mx-auto flex max-w-6xl items-center justify-between rounded-full bg-[#3a1111]/90 backdrop-blur-md px-6 py-2.5 shadow-xl"
           aria-label={t('nav.home')}
@@ -62,8 +73,8 @@ export default function Header() {
                 className="flex items-center gap-0.5 text-[15px] font-medium text-white/90 transition-all hover:text-white"
                 aria-label={t('nav.language')}
               >
-                {LANGUAGES.find((l) => l.code === i18n.language)?.label || 'UZB'}
-                <MdArrowDropDown className="h-5 w-5" />
+                {LANGUAGES.find((l) => l.code === i18n.language)?.label || 'UZ'}
+                <MdArrowDropDown className={`h-5 w-5 transition-transform duration-300 ${langOpen ? 'rotate-180' : ''}`} />
               </button>
               {langOpen && (
                 <div className="absolute right-0 mt-2 w-24 rounded-lg bg-[#3a1111] shadow-xl border border-white/10 overflow-hidden">

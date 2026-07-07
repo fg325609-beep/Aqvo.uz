@@ -4,6 +4,9 @@ import { X, ShoppingBag, CheckCircle, AlertCircle, Loader2, Sparkles, Shield, Le
 import { useTranslation } from 'react-i18next';
 import { sendToTelegram } from '../telegram.js';
 
+const marqueeText = "TABIIY MAHSULOTLAR";
+const marqueeRepeat = 8;
+
 const REGIONS = ['tashkent', 'samarkand', 'bukhara', 'fergana', 'namangan', 'andijan', 'khorezm', 'surkhandarya', 'kashkadarya'];
 const SERVICES = ['delivery', 'pickup'];
 
@@ -118,6 +121,21 @@ export default function Hero() {
             ))}
           </motion.div>
         </motion.div>
+
+        {/* Infinite marquee text */}
+        <div className="absolute bottom-28 sm:bottom-36 md:bottom-44 left-0 w-full overflow-hidden pointer-events-none z-10">
+          <div className="flex whitespace-nowrap animate-marquee">
+            {Array.from({ length: marqueeRepeat }).map((_, i) => (
+              <span
+                key={i}
+                className="inline-block text-[15vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] font-black uppercase text-white/5 select-none leading-none tracking-tighter px-4"
+                style={{ textShadow: '0 0 40px rgba(255,255,255,0.03)' }}
+              >
+                {marqueeText}
+              </span>
+            ))}
+          </div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}
